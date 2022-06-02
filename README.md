@@ -12,10 +12,10 @@ is applied, and the user ID defaults to `1234`.
 ## Prerequisites
 
 A cluster on which this example can be tested must be running Kubernetes 1.9.0 or above,
-with the `admissionregistration.k8s.io/v1beta1` API enabled. You can verify that by observing that the
+with the `admissionregistration.k8s.io/v1` API enabled. You can verify that by observing that the
 following command produces a non-empty output:
 ```
-kubectl api-versions | grep admissionregistration.k8s.io/v1beta1
+kubectl api-versions | grep admissionregistration.k8s.io/v1
 ```
 In addition, the `MutatingAdmissionWebhook` admission controller should be added and listed in the admission-control
 flag of `kube-apiserver`.
@@ -82,7 +82,7 @@ I am running as user 0
 5. Attempt to deploy [a pod](examples/pod-with-conflict.yaml) that has a conflicting setting: `runAsNonRoot` set to `true`, but `runAsUser` set to 0 (root).
 The admission controller should block the creation of that pod.
 ```
-$ kubectl create -f examples/pod-with-conflict.yaml 
+$ kubectl create -f examples/pod-with-conflict.yaml
 Error from server (InternalError): error when creating "examples/pod-with-conflict.yaml": Internal error
 occurred: admission webhook "webhook-server.webhook-demo.svc" denied the request: runAsNonRoot specified,
 but runAsUser set to 0 (the root user)
